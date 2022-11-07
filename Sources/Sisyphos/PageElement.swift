@@ -343,13 +343,11 @@ extension PageElement {
             // keyboard which explains how to use the swipe keyboard. All of the buttons of the keyboard and its
             // toolbar are visible for the automation, but not tappable. We first need to dismiss the overlay.
             // Unfortunately this overlay is not part of the keyboard, so querying it via application.keyboards... will
-            // not work. It doesn't have an accessibility identifier neither. Therefore we go by its location on the
-            // screen, which should be below the keyboard.
+            // not work. It doesn't have an accessibility identifier neither.
             if !dismissButton.isHittable {
                 guard let app = getPage()?.xcuiapplication else { return }
-                let endOfKeyboard = app.keyboards.firstMatch.frame.maxY
                 for button in app.buttons.matching(identifier: "Continue".localizedForSimulator).allElementsBoundByIndex {
-                    guard button.isHittable, button.frame.minY > endOfKeyboard else { continue }
+                    guard button.isHittable else { continue }
                     button.tap()
                     break
                 }
