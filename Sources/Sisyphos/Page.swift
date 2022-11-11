@@ -44,6 +44,7 @@ public extension Page {
     func exists() -> PageExistsResults {
         XCTContext.runActivity(named: "Check if page \(debugName) exists") { activity in
             guard let snapshot = try? xcuiapplication.snapshot() else {
+                assertionFailure()
                 return PageExistsResults(missingElements: body.elements)
             }
             let finder = ElementFinder(page: self, snapshot: snapshot)
